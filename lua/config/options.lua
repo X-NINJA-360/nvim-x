@@ -19,6 +19,10 @@ vim.o.relativenumber = true
 --  Experiment for yourself to see if you like it!
 -- vim.o.relativenumber = true
 
+-- Tab width
+vim.o.shiftwidth = 4
+vim.o.tabstop = 4
+
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.o.mouse = "a"
 
@@ -29,9 +33,15 @@ vim.o.showmode = false
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
 --  See `:help 'clipboard'`
-vim.schedule(function()
-	vim.o.clipboard = "unnamedplus"
-end)
+vim.keymap.set("n", "<leader>smk", function()
+	if vim.opt.clipboard:get()[1] == "unnamedplus" then
+		vim.opt.clipboard = ""
+		print("Clipboard: Local")
+	else
+		vim.opt.clipboard = "unnamedplus"
+		print("Clipboard: System")
+	end
+end, { desc = "Toggle clipboard" })
 
 -- Enable break indent
 vim.o.breakindent = true
