@@ -4,7 +4,7 @@ return {
 	priority = 999,
 	config = function()
 		require("vscode").setup({
-			transparent = false,
+			transparent = true,
 			italic_comments = true,
 		})
 		require("vscode").load()

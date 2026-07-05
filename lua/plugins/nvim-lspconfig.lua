@@ -189,6 +189,22 @@ return {
 			},
 		})
 
+		local lspconfig = require("lspconfig")
+		local configs = require("lspconfig.configs")
+
+		if not configs.smali_lsp then
+			configs.smali_lsp = {
+				default_config = {
+					cmd = { "java", "-jar", vim.fn.expand("~/.local/share/smali-lsp.jar"), "lsp" },
+					filetypes = { "smali" },
+					root_dir = function(fname)
+						return lspconfig.util.root_pattern("AndroidManifest.xml", "apktool.yml", ".git")(fname)
+					end,
+				},
+			}
+		end
+
+		lspconfig.smali_lsp.setup({})
 		-- LSP servers and clients are able to communicate to each other what features they support.
 		--  By default, Neovim doesn't support everything that is in the LSP specification.
 		--  When you add blink.cmp, luasnip, etc. Neovim now has *more* capabilities.
